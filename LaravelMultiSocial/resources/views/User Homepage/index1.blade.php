@@ -17,6 +17,7 @@
         width: 100%;
         height: 100%;
         margin: 0;
+
     }
 
     .container1 {
@@ -35,13 +36,12 @@
 
 
 
-
-<div class="jumbotron" style="padding-top:20px;padding-bottom:20px">
-    <div class="row">
-        <div class="col-md-3">
+<div class="jumbotron" style="padding-top:20px;padding-bottom:20px;margin:0px;height:70%;">
+    <div class="row" style="height:100%;">
+        <div class="col-md-3" style="vertical-align:center">
             <div class='stepOne'>
                 <h2  align="middle">Step 1</h2>
-                <h4  align="middle">Please select the dates to check availablility: </h4>
+                <h4  align="middle">Select the dates for equipment booking: </h4>
                 <div class="form-row">
                     <div class='col-sm-6'>
                         <form method="post">
@@ -55,7 +55,7 @@
                     <div class='col-sm-6'>
                         <form method="post">
                             <div class="form-group"> <!-- Date input -->
-                                <label>Til Date:</label>
+                                <label>Till Date:</label>
                                 <input class="form-control" id="toDate" name="toDate" placeholder="YYYY-MM-DD" type="text"/>
                             </div>
                         </form>
@@ -119,7 +119,7 @@
         <div class='stepTwo' style="display:none">
             <div class="col-md-3" align="middle" style="padding:5px;">
                 <h2  align="middle">Step 2</h2 >
-                <h4 align="middle"> Please select suitable category:</h4>
+                <h4 align="middle"> Please select equipment category:</h4>
                 <div class="bs-component" style="height: 250px;overflow-y:scroll;">
                     <div class="list-group" id="highlight1">
 
@@ -229,7 +229,7 @@
             <div class='stepThree' style="display:none">
                 <h2  align="middle">Step 3</h2>
 
-                <h4  align="middle">Please select the product: </h4>
+                <h4  align="middle">Please select the equipment: </h4>
                 <!-- Code for products needs to be added here-->
 
                 <table class="table table-hover table-bordered" id="productTable">
@@ -390,8 +390,8 @@
                 </div>
                 <br>
                 <div class="form-group" align="middle"> <!-- Submit button -->
-                    <button class="btn btn-primary" name="submit" type="submit" formaction="#">Add to cart</button>
-                    <button class="btn btn-primary" name="submit" type="submit" onclick="step3()">Back</button>
+                    <!-- <button class="btn btn-primary" name="submit" type="submit" formaction="#">Add to cart</button> -->
+                  <!-- <button class="btn btn-primary" name="submit" type="submit" onclick="step3()">Back</button> -->
                     <script>
                         function step3(){
                             $('.stepThree').hide(); //for step three replace the class name with rightpane...

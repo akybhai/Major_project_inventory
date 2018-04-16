@@ -33,7 +33,7 @@
                       <div class="form-group">
                         <label class="control-label col-sm-2" for="post">Position:</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="post" placeholder="Enter Society" name="post">
+                          <input type="text" class="form-control" id="post" placeholder="Enter Position" name="post">
                         </div>
                       </div>
                       <div class="form-group">

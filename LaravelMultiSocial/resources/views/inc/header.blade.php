@@ -26,6 +26,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Home</a></li>
             <li><a href="/YourCart">Cart</a></li>
+            <li><a href="/userrequest">My Requests</a></li>
             <li><a href="help.html">Help</a></li>
             <li>
               <form class="navbar-form navbar-right" >
@@ -47,7 +48,7 @@
                   <li><a href="{{ route('login') }}">Login</a></li>
                   {{-- <li><a href="{{ route('register') }}">Register</a></li> --}}
                 @else
-                <li><a class="dropdown-item" href="#"><i class="fa fa-user fa-lg"></i> {{ Auth::user()->name }}</a></li>
+                <li><a class="dropdown-item" href="{{ route('home') }}"><i class="fa fa-user fa-lg"></i> {{ Auth::user()->name }}</a></li>
                 <li><a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

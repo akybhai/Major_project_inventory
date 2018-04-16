@@ -1,56 +1,48 @@
-@extends('layouts.app')
+@extends('layouts.loginlayout')
+
+@section('style')
+  <!-- Bootstrap core CSS -->
+<link href="sa/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+<link href="sa/fonts/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="sa/css/coming-soon.css" rel="stylesheet">
+
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">This site requires you to login using NUIG account</div>
+  <div class="overlay" style="height: 100%;"></div>
+<div class="masthead" style="width:50%; height:80%">
+<div class="masthead-bg" style="z-index:-1"></div>
+<div class="container h-100" style="width:100%;height:100%">
+<div class="row ha-100" style="width:100%;height:100%;margin:0px">
+  <div class="col-12" style="margin-top: 30%">
 
-                <div class="panel-body" style="display: flex;justify-content: center;">
-                    <!-- <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+  <div class="masthead-content text-white">
+  <h1 style="font-weight: 700; font-size:60px"><font color="White">Please Login!</h1>
+  <p style="font-weight: 200; font-size:20px">Use NUIG account
+    <strong>Click button below</strong></p></font>
+    <a href="{{route ('auth.microsoft')}}"><button class="btn btn-secondary btn-lg" type="button">Login Here</button></a>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                            </div>
-                        </div>
-                    </form> -->
-                    <a href="{{ route('auth.microsoft')}}"><button  class="btn btn-primary">
-                        Login Using Microsoft
-                    </button></a>
-                  </div>
-            </div>
-        </div>
-    </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+@endsection
+
+@section('script')
+  <!-- Bootstrap core JavaScript -->
+<script src="sa/jquery/jquery.min.js"></script>
+<script src="sa/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="sa/jquery/jquery.vide.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="sa/js/coming-soon.js"></script>
 @endsection

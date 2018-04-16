@@ -44,6 +44,14 @@
     }
 </style>
 <div class="container">
+
+  <?php
+  $userid= Auth::id();
+
+  $cartcount = \DB::select('select count(*) as c from cart WHERE User_Id=?', [$userid]);
+
+  ?>
+  @if($cartcount[0]->c!=0)
     <table id="cart" class="table table-hover table-condensed">
         <thead>
         <tr>
@@ -54,8 +62,15 @@
         </thead>
         <tbody>
         <?php
-        $userid= Auth::id();
+
+
+
+
+
+
         $Cart = \DB::select('select * from cart WHERE User_Id=?', [$userid]);
+
+
 
         foreach ($Cart as $c)
             {
@@ -67,7 +82,7 @@
                 echo '<tr>
             <td data-th="Product">
                 <div class="row">
-                    <div class="col-sm-2 hidden-xs"><img src="';
+                    <div class="col-sm-2 hidden-xs"><img src="/storage/cover_images/';
 
 
                     if($photocount[0]->c>0)
@@ -78,7 +93,7 @@
 
 
                         else{
-                        echo "img/noPhoto.png";
+                        echo "/noPhoto.png";
         }
 
 
@@ -162,10 +177,23 @@
         <tr>
             <td><a href="{{'/'}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
             <td colspan="1"></td>
-            <td><a href="#" class="btn btn-success btn-block" onclick="checkout()">Checkout <i class="fa fa-angle-right"></i></a></td>
+            <td><a href="#" class="btn btn-success btn-block" id="checkout" onclick="checkout()">Checkout <i class="fa fa-angle-right"></i></a></td>
         </tr>
         </tfoot>
     </table>
+    @else
+    <div style="height:400px;" class="span12">
+Redirecting to Home page
+</div>
+
+    <script>
+    alert("No Items in cart");
+
+    setTimeout(function () {
+       window.location.href = "{{'/'}}"; //will redirect to your blog page (an ex: blog.html)
+    }, 500);
+    </script>
+    @endif
 </div>
 
 <script>
@@ -185,6 +213,7 @@
     function checkout()
     {
         var r=document.getElementById("reason").value;
+        document.getElementById("checkout").disabled = true;
         $.ajax({
             type: "POST",
             url: '/checkout',
