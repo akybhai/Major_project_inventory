@@ -36,7 +36,7 @@ class GetProductController extends Controller
                         <td><button type="button" class="btn btn-primary" onclick="viewprod('.$pp->p.');">Availability</button>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product_view_'.$pp->p.'"><i class="fa fa-search"></i> Quick View</button>
                         </td>
-                        
+
                     </tr>
                     <div class="modal fade product_view" id="product_view_'.$pp->p.'">
    <div class="modal-dialog">
@@ -47,8 +47,8 @@ class GetProductController extends Controller
        </div>
        <div class="modal-body">
            <div class="row">
-               <div class="col-md-6 product_img" >
-                   <img src="';
+               <div class="col-md-6 " style="overlay:auto;" >
+                   <img  src="/storage/cover_images/';
 
 
             $prodcount=\DB::select('select count(*) as c from products WHERE productID=?', [$pp->p]);
@@ -67,7 +67,7 @@ class GetProductController extends Controller
         }
 
 
-            echo '" class="img-responsive" style="height:300px;width:200px">
+            echo '" class="img-responsive" style="height:300px;weight:100%">
                </div>
                <div class="col-md-6 product_content">
                    <h4>Product Id: <span>'.$pp->p.'</span></h4>
