@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Storage;
 use App\Product;
 use App\Category;
 use App\ProductImages;
+use DB;
 
 class ProductsController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('checkadmin', ['except' => ['index','show']]);
+        $this->middleware('checkstaffadmin', ['except' => ['index','show']]);
     }
     /**
      * Display a listing of the resource.
@@ -85,7 +86,6 @@ class ProductsController extends Controller
       $product->description = $request->input('productDescription');
       $product->category = $productCategoryId[0]->id;
       // net to think of mechanism to include the required item
-      $product->requiredItem = "primary";
       $product->productID = $request->input('productID');
       $product->save();
       //
@@ -93,8 +93,13 @@ class ProductsController extends Controller
       $productImages->product_id =  $request->input('productID');
       $productImages->cover_image = $fileNameToStore;
       $productImages->save();
+
+//save in log
+      $prodid=$request->input('productID');
+      $catname=$request->input('productCategory');
+      $getData = DB::table('activities')->insert(array("event"=>"Product ($prodid) was added in category ($catname)"));
       //redirect
-      return redirect('/products') ;
+      return redirect()->route('adminstaff.products') ;
     }
 
     /**
@@ -133,57 +138,59 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-      $this->validate($request,[
-        'productName' => 'required',
+     public function update(Request $request, $id)
+     {
+       $this->validate($request,[
+         'productName' => 'required',
 
-      ]);
-      // Deal with images
-      //Handle the File Upload
-      if($request->hasFile('cover_image'))
-      {
-        //get file name with extension
-          $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-          //get just filename
-          $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-          //get just ext
-          $extension = $request->file('cover_image')->getClientOriginalExtension();
-          //Filename to Store
-          $fileNameToStore = $filename.'_'.time().'.'.$extension;
-          //Upload image
-          $path = $request->file('cover_image')->storeAs('public/cover_images',$fileNameToStore);
-      }
-
-
+       ]);
+       // Deal with images
+       //Handle the File Upload
+       if($request->hasFile('cover_image'))
+       {
+         //get file name with extension
+           $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+           //get just filename
+           $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+           //get just ext
+           $extension = $request->file('cover_image')->getClientOriginalExtension();
+           //Filename to Store
+           $fileNameToStore = $filename.'_'.time().'.'.$extension;
+           //Upload image
+           $path = $request->file('cover_image')->storeAs('public/cover_images',$fileNameToStore);
+       }
 
 
 
-      // deal with the product category and change it to number
-      $productCategoryId = Category::where('category',$request->input('productCategory'))->get();
-      //add
-      $product = Product::find($id);
-      $product->name = $request->input('productName');
-      $product->description = $request->input('productDescription');
-      $product->category = $productCategoryId[0]->id;
-      // net to think of mechanism to include the required item
-      $product->requiredItem = "primary";
-      $product->productID = $request->input('productID');
-      $product->save();
 
-      #Update the product of the Image
-      $productImage = ProductImages::where('product_id',$request->input('productID'))->firstOrFail();
-      // return $productImage;
-      // handling product database
-      if($request->hasFile('cover_image'))
-      {
-       $productImage->cover_image = $fileNameToStore;
-      }
-      $productImage->save();
-      // here handle for the photo update if the cover_image changes
 
-      return redirect('/products') ;
-    }
+       // deal with the product category and change it to number
+       $productCategoryId = Category::where('category',$request->input('productCategory'))->get();
+       //add
+
+       $product = Product::find($id);
+       //store the productID
+       $productID = $product->productID;
+       $product->name = $request->input('productName');
+       $product->description = $request->input('productDescription');
+       $product->category = $productCategoryId[0]->id;
+       // net to think of mechanism to include the required item
+       $product->save();
+
+       #Update the product of the Image
+       $productImage = ProductImages::where('product_id',$productID)->firstOrFail();
+       // return $productImage;
+       // handling product database
+       // return 1;
+       if($request->hasFile('cover_image'))
+       {
+        $productImage->cover_image = $fileNameToStore;
+       }
+       $productImage->save();
+       // here handle for the photo update if the cover_image changes
+
+       return redirect()->route('adminstaff.products') ;
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -202,6 +209,9 @@ class ProductsController extends Controller
         Storage::delete('public/cover_images/'.$productImage->cover_image);
         }
         $productImage->delete();
-        return redirect('/products');
+
+        //save in log
+              $getData = DB::table('activities')->insert(array("event"=>"Product ($id) was deleted"));
+        return redirect()->route('adminstaff.products') ;
     }
 }
